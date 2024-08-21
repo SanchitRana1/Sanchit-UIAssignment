@@ -32,7 +32,6 @@ const Home = () => {
             <ul>
               {Object.keys(customer.points).map((month) => (
                 <li key={month}>
-
                   <p className="fontBold underLine">Month {month}</p> 
                   {customer.points[month].map((trans,i) => <div key={i}>
                     <span className="fontBold">$ {trans[0]} </span> amount | 

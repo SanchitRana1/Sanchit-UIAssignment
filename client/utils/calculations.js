@@ -23,27 +23,19 @@ export const aggregatePoints = (transactions) => {
 
           if (!pointsAcc[month]) {
             pointsAcc[month] = [];
-            //  pointsAcc[month+"-amount"] =0
           }
-          // pointsAcc[month+"-amount"] += amount
-          // pointsAcc[month] += points;
           pointsAcc[month].push([amount, (points ? points : 0)])
-          // console.log("pointsAcc",pointsAcc);
 
           return pointsAcc;
         },
         {}
       );
-      // console.log("customerPoints: ",customerPoints)
 
       acc[customerId] = {
         name,
         points: customerPoints,
-        total: Object.values(customerPoints).map(item => item.reduce((acc, inn) => acc + inn[1], 0)).reduce((acc,final)=>acc+final,0)
-      }        // total: Object.values(customerPoints).reduce((a, b) => a + b, 0),
-      // total: Object.values(customerPoints).map(item=>item[1]).reduce((a, b) => a + b, 0),      };
-
-      // console.log("Acc: ", acc)
+        total: Object.values(customerPoints).map(item => item.reduce((acc, inn) => acc + inn[1], 0)).reduce((acc, final) => acc + final, 0)
+      }
       return acc;
     },
     {}
