@@ -1,3 +1,5 @@
+
+//calculates the reward points for each transaction
 export const calculatePoints = (amount) => {
   let points = 0;
   if (amount > 100) {
@@ -10,7 +12,7 @@ export const calculatePoints = (amount) => {
   return points;
 };
 
-//provides the aggregates 
+//provides the aggregates of points per customer per month
 export const aggregatePoints = (transactions) => {
   const pointsPerMonth = transactions.reduce(
     (acc, { customerId, name, transactions }) => {
@@ -19,24 +21,29 @@ export const aggregatePoints = (transactions) => {
           const month = new Date(date).getMonth() + 1; // Get month as a number (1-12)
           const points = calculatePoints(amount);
 
-          if (!pointsAcc[month]) pointsAcc[month] = 0;
-          pointsAcc[month] += points;
+          if (!pointsAcc[month]) {
+            pointsAcc[month] = [];
+            //  pointsAcc[month+"-amount"] =0
+          }
+          // pointsAcc[month+"-amount"] += amount
+          // pointsAcc[month] += points;
+          pointsAcc[month].push([amount, (points ? points : 0)])
+          // console.log("pointsAcc",pointsAcc);
 
-          console.log("pointsAcc",pointsAcc);
-          
           return pointsAcc;
         },
         {}
       );
-      console.log("customerPoints: ",customerPoints)
+      // console.log("customerPoints: ",customerPoints)
 
       acc[customerId] = {
         name,
         points: customerPoints,
-        total: Object.values(customerPoints).reduce((a, b) => a + b, 0),
-      };
+        total: Object.values(customerPoints).map(item => item.reduce((acc, inn) => acc + inn[1], 0)).reduce((acc,final)=>acc+final,0)
+      }        // total: Object.values(customerPoints).reduce((a, b) => a + b, 0),
+      // total: Object.values(customerPoints).map(item=>item[1]).reduce((a, b) => a + b, 0),      };
 
-console.log("Acc: ",acc)
+      // console.log("Acc: ", acc)
       return acc;
     },
     {}

@@ -4,7 +4,7 @@ import { transactions } from "../../utils/testData";
 
 const Home = () => {
   const [customerPoints, setCustomerPoints] = useState({});
- 
+
   const fetchTransactions = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -15,7 +15,6 @@ const Home = () => {
 
   useEffect(() => {
     fetchTransactions().then((data) => {
-        console.log(data)
       const points = aggregatePoints(data);
       setCustomerPoints(points);
     });
@@ -25,17 +24,23 @@ const Home = () => {
       <h1>Customer Reward Points</h1>
       {Object.keys(customerPoints).map((customerId) => {
         const customer = customerPoints[customerId];
+        console.log(customer)
         return (
           <div key={customerId}>
-            <h2>{customer.name}</h2>
-            <p>Total Points: {customer.total}</p>
+            <h2 className="border">{customer.name}</h2>
+            <h3 className="underLine">Total Points: {customer.total}</h3>
             <ul>
               {Object.keys(customer.points).map((month) => (
                 <li key={month}>
-                  Month {month}: {customer.points[month]} points
+
+                  <p className="fontBold underLine">Month {month}</p> 
+                  {customer.points[month].map((trans,i) => <div key={i}>
+                    <span className="fontBold">$ {trans[0]} </span> amount | 
+                    <span className="fontBold"> {trans[1]} </span>points</div>)} 
                 </li>
               ))}
             </ul>
+            <hr />
           </div>
         );
       })}

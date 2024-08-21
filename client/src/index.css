@@ -66,3 +66,19 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+ul>li{
+  margin-top: 2rem;
+}
+.fontBold{
+  font-weight: 700;
+}
+.underLine{
+  text-decoration:underline
+}
+
+.border{
+  border-radius: 10rem;
+  border: #ffffff 2px solid;
+}
